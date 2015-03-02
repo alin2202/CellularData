@@ -1,5 +1,7 @@
 package part02;
 
+import common_functions.Common;
+
 /**
  * @author alotfulina
  * Class keeps track of subscriptions for given country
@@ -122,7 +124,9 @@ public class Country {
 	 */
 	public String toString(){
 		String subscriptionsText = "";
-		subscriptionsText += String.format("%-25s", this.name);
+		subscriptionsText += String.format("%-35s", this.name);
+//		String name = Common.wrapText(this.name, 20);
+//		subscriptionsText += String.format("%-25s", name);
 		for (int i = 0; i < this.subscriptions.getLength(); i++) {
 			if(this.subscriptions.getElementAtIndex(i)==null){
 				subscriptionsText += " " + String.format("%6s", "n/a");
