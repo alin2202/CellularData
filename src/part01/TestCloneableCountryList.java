@@ -5,6 +5,7 @@ import java.util.Random;
  *  Tests the Cloneable class CountryList by creating an object of type CountryList.
  *  Then, cloning the object and modifying the cloned object.
  */
+
 public class TestCloneableCountryList {
 
 	private static final int LIST_SIZE = 4;
@@ -12,10 +13,10 @@ public class TestCloneableCountryList {
 	/**
 	 * Builds a list of countries to debug.
 	 */
-	private void debugListOfCountries(Country [] allCountries)
-	{
-		// TO COMPLETE
-	}
+//	private void debugListOfCountries(Country [] allCountries)
+//	{
+//		// TO COMPLETE
+//	}
 	
 	/**
 	 * Creates a list of randomly selected countries
@@ -38,10 +39,29 @@ public class TestCloneableCountryList {
 	 */
 	private CountryList testCloneableList(CountryList listOfCountries)
 	{
-		CountryList clonedList = null;
+		// create clone of existing list
+		CountryList clonedList = null;	
+		clonedList = (CountryList) listOfCountries.clone();
 		
-		// TO COMPLETE
+		// add new country to cloned list
+		Country newCountry = new Country("New Country", 53);
+		newCountry.addSubscriptionYear(1960, 3.59);		
+		clonedList.add(newCountry);
 		
+		// get Country Name at index 0
+		Country selectedCountry = clonedList.getElementAtIndex(0);
+		
+		// change country name
+		String old_name = selectedCountry.getName();
+		old_name += ": new data";
+		selectedCountry.setName(old_name);
+		
+		// remove all subscriptions from first country and add three new values
+		selectedCountry.removeCurrentSubscriptions();
+		selectedCountry.addSubscriptionYear(1960, 10.0);
+		selectedCountry.addSubscriptionYear(1961, 5.0);
+		selectedCountry.addSubscriptionYear(1962, 2.0);
+		// return cloned object
 		return clonedList;
 	}
 
@@ -51,13 +71,10 @@ public class TestCloneableCountryList {
 	public static void main(String[] args) 
 	{
 
-		final String FILENAME = "resources/cellular.csv";	// Directory path for Mac OS X
-		//final String FILENAME = "resources\\cellular.csv";	// Directory path for Windows OS (i.e. Operating System)
-
-		
+//		final String FILENAME = "resources/cellular.csv";	// Directory path for Mac OS X
+		final String FILENAME = "resources\\cellular.csv";	// Directory path for Windows OS (i.e. Operating System)
 
 		// Parse the CSV data file
-		//
 		CSVReader parser = new CSVReader(FILENAME);
 
 		String [] countryNames = parser.getCountryNames();
@@ -93,7 +110,6 @@ public class TestCloneableCountryList {
 		// Output the countries added to the CountryList
 		System.out.println("\nList of countries: ");
 		System.out.println(listOfCountries);
-		
 		
 		// Clone and modify the list of nodes
 		// TO COMPLETE: Complete the implementation of "testCloneableList" to:
