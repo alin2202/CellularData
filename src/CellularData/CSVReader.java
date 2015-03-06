@@ -1,4 +1,4 @@
-package part01;
+package CellularData;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -74,22 +74,22 @@ public class CSVReader {
 		}
 	}
 
-	/* method which returns “countryNames” */
+	/* method which returns “countryNames�? */
 	public String[] getCountryNames() {
 		return countryNames;
 	}
 
-	/* method that returns “yearLabels” */
+	/* method that returns “yearLabels�? */
 	public int[] getYearLabels() {
 		return yearLabels;
 	}
 
-	/* method that returns “cellularDataTable” */
+	/* method that returns “cellularDataTable�? */
 	public double[][] getParsedTable() {
 		return cellularDataTable;
 	}
 
-	/* method that returns “numberOfYears” */
+	/* method that returns “numberOfYears�? */
 	public int getNumberOfYears() {
 		return numberOfYears;
 	}

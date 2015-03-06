@@ -1,4 +1,4 @@
-package part02;
+package CellularData;
 /**
  * @author alotfulina
  * Class Node, object of which holds information about Node of requested type

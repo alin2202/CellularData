@@ -1,63 +1,72 @@
-package part01;
+package CellularData;
+
 /**
  * @author alotfulina
  * Class keeps track of subscriptions for given country
  * takes in countryName and numberOfCountries
  * Consists of class constructor and following methods:
  * - addSubscriptionYear(int year, double subscription) : 
- * creates a new SubscriptionYear object and save it in â€œsubscriptionsâ€� array
+ * creates a new SubscriptionYear object and save it in subscriptions linked list
+ * - getName() : getter method for country name
  * - getNumSubscriptionsForPeriod(int startYear, int endYear) : 
  * returns a type double for the total number of subscriptions between start and end years
+ * - equals(Object other) : returns true if country names are equal
  * - toString() : returns string representation of class object
  */
-public class Country implements Cloneable{
+
+public class Country {
 	
 	private String name; // country name
-	private SubscriptionYear[] subscriptions; //subscriptions data for the country
+	private LinkedList<SubscriptionYear> subscriptions; //subscriptions data for the country
+
+//  Constructor is no longer needed after converting subscriptions into LinkedList
+//	public Country(String countryName, int numOfCountries){
+//		this.name = countryName;
+//		this.subscriptions = new LinkedList<SubscriptionYear>();
+//	}
 	
-	public Country(String countryName, int numOfCountries){
-		this.name = countryName;
-		this.subscriptions = new SubscriptionYear[numOfCountries];
-	}
-	
-	// additional constructor
+	/**
+	 * Class Constructor
+	 * @param countryName
+	 */
 	public Country(String countryName){
 		this.name = countryName;
+		this.subscriptions = new LinkedList<SubscriptionYear>();
 	}
 	
-	// method creates a new SubscriptionYear object and save it in â€œsubscriptionsâ€� array
+	/**
+	 * Method that creates a new SubscriptionYear object 
+	 * and adds it to a linked list of subscriptions
+	 * @param year
+	 * @param subscription
+	 */
 	public void addSubscriptionYear(int year, double subscription){
-		SubscriptionYear currentYearSubscription = 
+		SubscriptionYear newSubscription = 
 				new SubscriptionYear(year, subscription);
-		for (int i = 0; i < this.subscriptions.length; i++){
-			if (subscriptions[i]==null){
-				subscriptions[i] = currentYearSubscription;
-				break;
-			}
-		}
+		this.subscriptions.add(newSubscription);
 	}
 	
-	public void removeCurrentSubscriptions(){
-		for(int i = 0; i < this.subscriptions.length; i++){
-			subscriptions[i] = null;
-		}	
-	}
-	
-	/*
-	 * Accessor method "getName()" for Country name
+	/**
+	 * Getter method for Country name
+	 * @return String name
 	 */
 	public String getName(){
 		return this.name;
 	}
 	
-	public void setName(String newName){
-		this.name = newName;
-	}
-	
-	// returns a type double for the total number of subscriptions between start and end years
+	/**
+	 * Method that returns total number of subscriptions
+	 * between start and end years
+	 * @param startYear
+	 * @param endYear
+	 * @return double numSubscriptions
+	 */
 	public double getNumSubscriptionsForPeriod(int startYear, int endYear){
+		int listLength = this.subscriptions.getLength();
+		int firstYear = this.subscriptions.getElementAtIndex(0).getYear();
+		int lastYear = subscriptions.getElementAtIndex(listLength - 1).getYear();
 		double numSubscriptions = 0;
-		int firstYear = this.subscriptions[0].getYear();
+		
 		int startYearIndex = startYear - firstYear;
 		int endYearIndex = endYear - firstYear;
 		try{
@@ -67,10 +76,10 @@ public class Country implements Cloneable{
 						+ " is less than starting year " + firstYear + ":");
 			}
 			
-			if (endYearIndex > subscriptions.length){
+			if (endYearIndex > listLength){
 				throw new Exception ("ERROR: requested year " + endYear
 						+ " is greater than end year " 
-						+ this.subscriptions[subscriptions.length - 1].getYear() + ":");
+						+ lastYear + ":");
 			}
 			
 			if (endYear < startYear){
@@ -80,7 +89,7 @@ public class Country implements Cloneable{
 			
 			// add each year subscriptions to numSubscriptions for country
 			for (int index = startYearIndex; index <= endYearIndex; index++){
-				double current =  this.subscriptions[index].getSubscriptions();
+				double current =  this.subscriptions.getElementAtIndex(index).getSubscriptions();
 				numSubscriptions += current;
 			}
 			
@@ -92,14 +101,15 @@ public class Country implements Cloneable{
 	
 	/**
 	 * Equals method: 
-	 * defines whether two CountyNode objects are equal or not
+	 * returns true if two County objects are equal
+	 * countries are considered to be equal if they have the same name
 	 */
 	public boolean equals(Object other){
-		// checking if object is of type CountryNode
+		// checking if object is of type Country
 		if (other instanceof Country){
-			// creating object of CountryNode
+			// creating object of Country
 			Country ref = (Country)other;
-			// comparing country
+			// comparing country names
 			if (this.name.equals(ref.name)){
 				return true;
 			}
@@ -107,25 +117,19 @@ public class Country implements Cloneable{
 		return false;		
 	}
 	
-	public Object clone(){
-		// create new country object
-		Country copy = new Country(this.name, this.subscriptions.length);
-		// clone subscriptions values
-		for (int i = 0; i < this.subscriptions.length; i++){
-			copy.subscriptions[i] = (SubscriptionYear) this.subscriptions[i].clone();
-		}
-		// return cloned object
-		return copy;
-	}
-	
+	/**
+	 * String representation of County class object
+	 */
 	public String toString(){
 		String subscriptionsText = "";
-		subscriptionsText += String.format("%-25s", this.name);
-		for (int i = 0; i < this.subscriptions.length; i++) {
-			if(this.subscriptions[i]==null){
+		subscriptionsText += String.format("%-35s", this.name);
+//		String name = Common.wrapText(this.name, 20);
+//		subscriptionsText += String.format("%-25s", name);
+		for (int i = 0; i < this.subscriptions.getLength(); i++) {
+			if(this.subscriptions.getElementAtIndex(i)==null){
 				subscriptionsText += " " + String.format("%6s", "n/a");
 			}else{
-				double currentYearSubscriptions = this.subscriptions[i].getSubscriptions();
+				double currentYearSubscriptions = this.subscriptions.getElementAtIndex(i).getSubscriptions();
 				subscriptionsText += " " + String.format("%6.2f", currentYearSubscriptions);
 			}		
 		}

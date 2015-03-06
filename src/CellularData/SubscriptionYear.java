@@ -1,4 +1,4 @@
-package part02;
+package CellularData;
 /**
  * @author alotfulina
  * Class Subscription consists of class constructor and following methods:
